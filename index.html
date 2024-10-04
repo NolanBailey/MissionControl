@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Mission Control</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        #ticker {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 200px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .yahoo {
+            background-color: #8a2be2;
+        }
+        .yahoo:hover {
+            background-color: #7a1bb2;
+        }
+        .seekingalpha {
+            background-color: #ff4500;
+        }
+        .seekingalpha:hover {
+            background-color: #e03d00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock Mission Control</h1>
+    <input type="text" id="ticker" placeholder="Enter stock ticker">
+    <button class="button yahoo" onclick="openYahooFinance()"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/Yahoo%21_Finance_logo_2021.png" width="100"></button>
+    <button class="button seekingalpha" onclick="openSeekingAlpha()"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Seeking_Alpha_Logo.svg"></button>
+
+    <script>
+        function openYahooFinance() {
+            var ticker = document.getElementById('ticker').value;
+            var url = 'https://finance.yahoo.com/quote/' + ticker;
+            window.open(url, '_blank');
+        }
+
+        function openSeekingAlpha() {
+            var ticker = document.getElementById('ticker').value;
+            var url = 'https://seekingalpha.com/symbol/' + ticker;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
