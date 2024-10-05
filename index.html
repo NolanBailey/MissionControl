@@ -49,6 +49,12 @@
         .seekingalpha:hover {
             background-color: #e03d00;
         }
+        .nasdaq {
+            background-color: #62bdea;
+        }
+        .nasdaq:hover {
+            background-color: #7bc5ea;
+        }
     </style>
 </head>
 <body>
@@ -56,6 +62,7 @@
     <input type="text" id="ticker" placeholder="Enter stock ticker">
     <button class="button yahoo" onclick="openYahooFinance()"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/Yahoo%21_Finance_logo_2021.png" width="100"></button>
     <button class="button seekingalpha" onclick="openSeekingAlpha()"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Seeking_Alpha_Logo.svg"></button>
+    <button class="button nasdaq" onclick="openNasdaq()"><img src="https://upload.wikimedia.org/wikipedia/commons/8/87/NASDAQ_Logo.svg"></button>
 
     <script>
         function openYahooFinance() {
@@ -67,6 +74,12 @@
         function openSeekingAlpha() {
             var ticker = document.getElementById('ticker').value;
             var url = 'https://seekingalpha.com/symbol/' + ticker;
+            window.open(url, '_blank');
+        }
+
+        function openNasdaq() {
+            var ticker = document.getElementById('ticker').value;
+            var url = 'https://www.nasdaq.com/search?q=' + ticker;
             window.open(url, '_blank');
         }
     </script>
