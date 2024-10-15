@@ -108,11 +108,9 @@
         .search-container li:last-child {
             border-bottom: none;
         }
-        .search-container li .plus {
-            color: #0000ff; /* Same blue color as the Mission Control+ button */
+        .search-container li .star {
+            color: gold;
             margin-left: 10px;
-            font-size: 20px;
-            font-weight: bold;
         }
         .search-container::-webkit-scrollbar {
             width: 0px; /* Remove scrollbar */
@@ -161,10 +159,10 @@
                     const li = document.createElement('li');
                     li.textContent = `${stock.symbol} (${stock.exchange})`;
                     if (stock.missionControlPlus) {
-                        const plus = document.createElement('span');
-                        plus.textContent = '+';
-                        plus.className = 'plus';
-                        li.appendChild(plus);
+                        const star = document.createElement('span');
+                        star.textContent = '★';
+                        star.className = 'star';
+                        li.appendChild(star);
                     }
                     li.addEventListener('click', () => {
                         searchInput.value = stock.symbol;

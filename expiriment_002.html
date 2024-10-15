@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Search Bar</title>
+    <style>
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        .search-container ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .search-container li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .search-container li:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Search for a stock symbol...">
+        <ul id="suggestions"></ul>
+    </div>
+    <script>
+        const searchInput = document.getElementById('search-bar');
+        const suggestions = document.getElementById('suggestions');
+        const symbols = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA']; // Add more symbols as needed
+
+        searchInput.addEventListener('keyup', (e) => {
+            const input = e.target.value.toLowerCase();
+            suggestions.innerHTML = '';
+            symbols.forEach(symbol => {
+                if (symbol.toLowerCase().includes(input)) {
+                    const li = document.createElement('li');
+                    li.textContent = symbol;
+                    suggestions.appendChild(li);
+                }
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const input = e.target.value.toLowerCase();
+            if (symbols.includes(input)) {
+                searchInput.value = input;
+                suggestions.innerHTML = '';
+            }
+        });
+    </script>
+</body>
+</html>

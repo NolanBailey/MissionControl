@@ -19,50 +19,15 @@
         h1 {
             margin-bottom: 20px;
         }
-        .search-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px; /* Added margin-bottom for better spacing */
-            display: flex;
-            align-items: center;
-        }
         #ticker {
             padding: 10px;
             font-size: 16px;
             border: none;
             border-radius: 5px;
             margin-right: 10px;
-            width: 100%; /* Adjusted width to take full container width */
+            width: 200px;
             background-color: #333;
             color: white;
-            box-sizing: border-box; /* Ensures padding is included in total width */
-        }
-        #go-button {
-            display: none; /* Initially hidden */
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            background-color: #0000ff; /* Blue color */
-            margin-left: 10px;
-            transition: opacity 0.5s ease; /* Fade-in effect */
-            opacity: 0;
-        }
-        #motley-fool-button {
-            display: none; /* Initially hidden */
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            background-color: #ffbb00; /* Motley Fool color */
-            transition: opacity 0.5s ease; /* Fade-in effect */
-            opacity: 0;
-            margin-top: 10px; /* Space between buttons */
         }
         .button {
             padding: 10px 20px;
@@ -80,6 +45,11 @@
         .seekingalpha:hover { background-color: #e03d00; }
         .nasdaq { background-color: #62bdea; }
         .nasdaq:hover { background-color: #7bc5ea; }
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
         .search-container ul {
             list-style: none;
             margin: 0;
@@ -89,13 +59,13 @@
             left: 0;
             background-color: #222;
             border: 1px solid #555;
+            border-top: none;
             width: 100%;
             max-height: 200px;
             overflow-y: auto;
             color: white;
             border-radius: 0 0 10px 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-            box-sizing: border-box; /* Ensures padding is included in total width */
         }
         .search-container li {
             padding: 10px;
@@ -108,14 +78,8 @@
         .search-container li:last-child {
             border-bottom: none;
         }
-        .search-container li .plus {
-            color: #0000ff; /* Same blue color as the Mission Control+ button */
-            margin-left: 10px;
-            font-size: 20px;
-            font-weight: bold;
-        }
         .search-container::-webkit-scrollbar {
-            width: 0px; /* Remove scrollbar */
+            width: 0px;  /* Remove scrollbar */
         }
     </style>
 </head>
@@ -124,7 +88,6 @@
     <div class="search-container">
         <input type="text" id="ticker" placeholder="Enter stock ticker">
         <ul id="suggestions"></ul>
-        <button id="go-button" onclick="openMissionControlPlus()">Mission Control+</button>
     </div>
     <button class="button yahoo" onclick="openYahooFinance()">
         <img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/Yahoo%21_Finance_logo_2021.png" width="100">
@@ -135,21 +98,17 @@
     <button class="button nasdaq" onclick="openNasdaq()">
         <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/NASDAQ_Logo.svg">
     </button>
-    <button class="button" id="motley-fool-button" onclick="openMotleyFool()">Motley Fool</button>
     <script>
         const searchInput = document.getElementById('ticker');
         const suggestions = document.getElementById('suggestions');
-        const goButton = document.getElementById('go-button');
-        const motleyFoolButton = document.getElementById('motley-fool-button');
         let selectedExchange = '';
-        let selectedSymbol = '';
 
         const stocks = [
-            { symbol: 'AAPL', exchange: 'NASDAQ', missionControlPlus: true },
-            { symbol: 'GOOGL', exchange: 'NASDAQ', missionControlPlus: false },
-            { symbol: 'MSFT', exchange: 'NASDAQ', missionControlPlus: false },
-            { symbol: 'AMZN', exchange: 'NASDAQ', missionControlPlus: false },
-            { symbol: 'TSLA', exchange: 'NASDAQ', missionControlPlus: false },
+            { symbol: 'AAPL', exchange: 'NASDAQ' },
+            { symbol: 'GOOGL', exchange: 'NASDAQ' },
+            { symbol: 'MSFT', exchange: 'NASDAQ' },
+            { symbol: 'AMZN', exchange: 'NASDAQ' },
+            { symbol: 'TSLA', exchange: 'NASDAQ' },
             // Add more stock symbols and exchanges here
         ];
 
@@ -160,27 +119,11 @@
                 if (stock.symbol.toLowerCase().includes(input)) {
                     const li = document.createElement('li');
                     li.textContent = `${stock.symbol} (${stock.exchange})`;
-                    if (stock.missionControlPlus) {
-                        const plus = document.createElement('span');
-                        plus.textContent = '+';
-                        plus.className = 'plus';
-                        li.appendChild(plus);
-                    }
                     li.addEventListener('click', () => {
                         searchInput.value = stock.symbol;
                         selectedExchange = stock.exchange;
-                        selectedSymbol = stock.symbol;
                         console.log(`Selected stock: ${stock.symbol}, Exchange: ${selectedExchange}`);
                         suggestions.innerHTML = '';
-                        if (stock.missionControlPlus) {
-                            goButton.style.display = 'block';
-                            setTimeout(() => { goButton.style.opacity = 1; }, 10); // Fade-in effect
-                        } else {
-                            goButton.style.display = 'none';
-                            goButton.style.opacity = 0; // Hide button
-                        }
-                        motleyFoolButton.style.display = 'block';
-                        setTimeout(() => { motleyFoolButton.style.opacity = 1; }, 10); // Fade-in effect
                     });
                     suggestions.appendChild(li);
                 }
@@ -202,16 +145,6 @@
         function openNasdaq() {
             var ticker = document.getElementById('ticker').value;
             var url = 'https://www.nasdaq.com/search?q=' + ticker;
-            window.open(url, '_blank');
-        }
-
-        function openMotleyFool() {
-            var url = `https://www.fool.com/quote/${selectedExchange}/${selectedSymbol}/`;
-            window.open(url, '_blank');
-        }
-
-        function openMissionControlPlus() {
-            var url = `https://nolanbailey.github.io/MissionControl/${selectedSymbol}`;
             window.open(url, '_blank');
         }
     </script>
